@@ -1,17 +1,15 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router";
 import Layout from "./components/Layout";
 import MovieCard from "./components/MovieCard";
 import MovieDetail from "./components/MovieDetail";
 import movieListData from "./data/movieListData.json";
-import "./App.css";
 
 const App = () => {
   const movies = movieListData.results;
 
   return (
     <Router>
-      <div className="app-container">
+      <div className="p-5">
         <Routes>
           {/* Layout을 기본 레이아웃으로 설정 */}
           < Route path="/" element={<Layout />}>
@@ -19,8 +17,8 @@ const App = () => {
             <Route
               path="/"
               element={
-                <div>
-                  <div className="movie-list">
+                <div className="flex justify-center">
+                  <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                     {movies.map((movie) => (
                       <MovieCard
                         key={movie.id}
