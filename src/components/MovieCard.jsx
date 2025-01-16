@@ -1,17 +1,21 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import "./MovieCard.css";
 
-const baseUrl = "https://image.tmdb.org/t/p/w500";
+const MovieCard = ({ id, title, posterPath, voteAverage }) => {
+  const baseUrl = "https://image.tmdb.org/t/p/w500";
 
-const MovieCard = ({poster_path, title, vote_average}) => {
-    const imageUrl = '${baseUrl}${posterPath}';
-
-    return (
-        <div className="movie-card">
-            <img src={imageUrl} alt={title} className="movie-image" />
-            <h3 className="movie-title">{title}</h3>
-            <p className="movie-rating">평점: {rating}</p>
-        </div>
-    );
+  return (
+    <Link to={`/movie/${id}`} className="movie-card">
+      <img
+        src={`${baseUrl}${posterPath}`}
+        alt={title}
+        className="movie-card-image"
+      />
+      <h3 className="movie-card-title">{title}</h3>
+      <p className="movie-card-rating">평점: ⭐ {voteAverage}</p>
+    </Link>
+  );
 };
 
 export default MovieCard;

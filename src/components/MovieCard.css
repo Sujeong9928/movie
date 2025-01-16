@@ -1,0 +1,29 @@
+.movie-card {
+    text-align: center;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding: 5px;
+    transition: transform 0.2s ease-in-out; /*자연스런 움직임*/
+  }
+  
+  .movie-card:hover {
+    transform: scale(1.05); /* 호버 시 살짝 확대 효과 */
+  }
+  
+  .movie-card-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+  }
+  
+  .movie-card-title {
+    font-size: 16px;
+    margin: 10px 0;
+  }
+  
+  .movie-card-rating {
+    font-size: 14px;
+    color: #555;
+  }
+  
