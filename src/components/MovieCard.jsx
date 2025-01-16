@@ -14,7 +14,7 @@ const MovieCard = ({ id, title, posterPath, voteAverage }) => {
       />
       <h3 className="movie-card-title">{title}</h3>
       <p className="movie-card-rating">평점: ⭐ {voteAverage}</p>
-    </Link>
+    </Link> 
   );
 };
 

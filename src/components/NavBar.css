@@ -20,21 +20,64 @@
     text-decoration: none;
   }
   
-  .navbar-links {
-    list-style: none;
+  .navbar-search {
     display: flex;
-    gap: 15px;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: center;
   }
   
-  .navbar-links li {
-    display: inline;
+  .navbar-search-input {
+    width: 300px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+    outline: none;
   }
   
-  .navbar-links a {
+  .navbar-search-button {
+    padding: 8px 12px;
+    background-color: #555;
     color: white;
-    text-decoration: none;
-    font-size: 16px;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
   }
+  
+  .navbar-search-button:hover {
+    background-color: #777;
+  }
+  
+  /* 로그인 & 회원가입 버튼 */
+  .navbar-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .navbar-button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .login-button {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .login-button:hover {
+    background-color: #777;
+  }
+  
+  .signup-button {
+    background-color: #007bff;
+    color: white;
+  }
+  
   
   .navbar-links a:hover {
     color: orchid;
