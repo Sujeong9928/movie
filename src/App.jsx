@@ -15,13 +15,12 @@ const App = () => {
         const response = await axios.get(
           "https://api.themoviedb.org/3/movie/popular",
           {
-            params: {
-              api_key: "e510cbdd16451aaa11bd9613abf5e9a8",
-              language: "en-US",
-              page: 1,
-            },
             headers: {
               Authorization: `Bearer ${import.meta.env.VITE_TMDB_ACCESS_TOKEN}`,
+            },
+            params: {
+              language: "ko-KR",
+              page: 2,
             },
           }
         );
@@ -56,7 +55,7 @@ const App = () => {
                         id={movie.id}
                         title={movie.title}
                         posterPath={movie.poster_path}
-                        voteAverage={movie.vote_average}
+                        voteAverage={movie.vote_average.toFixed(2)}
                       />
                     ))}
                   </div>

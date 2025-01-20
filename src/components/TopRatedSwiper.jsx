@@ -18,7 +18,7 @@ const TopRatedSwiper = ({ movies }) => {
       slidesPerView={3}  // 한 화면에 3개의 슬라이드를 표시
       navigation
       pagination={{ clickable: true }}
-      autoplay={{ delay: 3000 }}
+      autoplay={{ delay: 2500 }}
       centeredSlides={true}  // 가운데 슬라이드를 강조
       loop={true}  // 무한 루프 활성화
       className="shadow-lg"

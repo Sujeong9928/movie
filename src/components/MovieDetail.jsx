@@ -14,11 +14,10 @@ const MovieDetail = () => {
           `https://api.themoviedb.org/3/movie/${id}`,
           {
             headers: {
-              Authorization: `Bearer ${import.meta.VITE_TMDB_ACCESS_TOKEN}`,
+              Authorization: `Bearer ${import.meta.env.VITE_TMDB_ACCESS_TOKEN}`,
             },
             params: {
-              api_key: "e510cbdd16451aaa11bd9613abf5e9a8",
-              language: "en-US",
+              language: "ko-KR",
             },
           }
         );
@@ -77,19 +76,19 @@ const MovieDetail = () => {
           <h1 className="text-4xl font-bold text-gray-900">🎦{movie.title}</h1>
           <br />
           <p className="text-lg text-gray-700">
-            <strong>Overview: </strong>
+            <strong>줄거리: </strong>
             {movie.overview}
           </p>
           <div className="flex flex-col space-y-2">
             <p className="text-lg">
-              <strong className="font-semibold">Genres:</strong> {genres}
+              <strong className="font-semibold">장르:</strong> {genres}
             </p>
             <p className="text-lg">
-              <strong className="font-semibold">Release Date:</strong>{" "}
+              <strong className="font-semibold">개봉일:</strong>{" "}
               {movie.release_date}
             </p>
             <p className="text-lg">
-              <strong className="font-semibold">Rating:</strong>{" "}
+              <strong className="font-semibold">평점:</strong>{" "}
               {renderStars(movie.vote_average)}
             </p>
           </div>
