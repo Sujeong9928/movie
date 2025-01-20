@@ -1,40 +1,98 @@
 import { useParams } from "react-router-dom";
-import movieListData from "../data/movieListData.json";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 
 const MovieDetail = () => {
   const { id } = useParams();
-  const movie = movieListData.results.find((movie) => movie.id === parseInt(id));
+  const [movie, setMovie] = useState(null);
 
-  if (!movie) {
-    return <p className="text-center text-xl mt-10">영화를 찾을 수 없습니다.</p>;
-  }
+  useEffect(() => {
+    const fetchMovieDetail = async () => {
+      try {
+        const response = await axios.get(
+          `https://api.themoviedb.org/3/movie/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${import.meta.VITE_TMDB_ACCESS_TOKEN}`,
+            },
+            params: {
+              api_key: "e510cbdd16451aaa11bd9613abf5e9a8",
+              language: "en-US",
+            },
+          }
+        );
+        setMovie(response.data);
+      } catch (error) {
+        console.error("Error fetching movie details:", error);
+      }
+    };
 
-  const baseUrl = "https://image.tmdb.org/t/p/w500";
+    fetchMovieDetail();
+  }, [id]);
+
+  if (!movie) return <div>Loading...</div>;
+
+  // 장르 목록을 문자열로 변환
+  const genres = movie.genres.map((genre) => genre.name).join(", ");
+
+  // 평점별로 별을 렌더링하는 함수
+  const renderStars = (vote) => {
+    const fullStars = Math.floor(vote / 2); // 가득 찬 별 개수
+    const halfStars = vote % 2 >= 0.5 ? 1 : 0; // 반별 개수 (평점이 0.5 이상일 경우 반별 추가)
+    const emptyStars = 5 - fullStars - halfStars; // 빈 별 개수
+
+    return (
+      <div className="flex flex-row space-x-1">
+        {/* 가득 찬 별 */}
+        {Array.from({ length: fullStars }).map((_, index) => (
+          <FaStar key={`full-${index}`} className="text-yellow-400" />
+        ))}
+        {/* 반별 */}
+        {Array.from({ length: halfStars }).map((_, index) => (
+          <FaStarHalfAlt key={`half-${index}`} className="text-yellow-400" />
+        ))}
+        {/* 빈 별 */}
+        {Array.from({ length: emptyStars }).map((_, index) => (
+          <FaRegStar key={`empty-${index}`} className="text-yellow-400" />
+        ))}
+      </div>
+    );
+  };
 
   return (
-    <div className="flex flex-col lg:flex-row items-start p-6 max-w-5xl mx-auto gap-8">
-      {/* 왼쪽 영화 포스터 */}
-      <div className="flex-shrink-0">
-        <img
-          src={`${baseUrl}${movie.poster_path}`}
-          alt={movie.title}
-          className="w-64 rounded-lg shadow-lg"
-        />
-      </div>
+    <div className="p-5">
+      <div className="flex flex-col md:flex-row">
+        {/* 영화 이미지 */}
+        <div className="w-full md:w-1/3">
+          <img
+            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+            alt={movie.title}
+            className="w-full shadow-md"
+          />
+        </div>
 
-      {/* 오른쪽 영화 정보 */}
-      <div className="flex flex-col flex-grow">
-        <h1 className="text-4xl font-bold mb-5">🎦{movie.title}</h1>
-        <p className="text-lg mb-2">
-          <span className="font-semibold">평점:</span> ⭐ {movie.vote_average.toFixed(2)} / 10
-        </p>
-        <p className="text-lg mb-4">
-          <span className="font-semibold">장르:</span>{" "}
-          {movie.genre_ids.join(", ")}
-        </p>
-        <div>
-          <h2 className="text-2xl font-semibold mb-2">줄거리</h2>
-          <p className="text-base leading-relaxed">{movie.overview}</p>
+        {/* 영화 정보 */}
+        <div className="md:ml-8 mt-4 md:mt-0 w-full md:w-2/3 space-y-4">
+          <h1 className="text-4xl font-bold text-gray-900">🎦{movie.title}</h1>
+          <br />
+          <p className="text-lg text-gray-700">
+            <strong>Overview: </strong>
+            {movie.overview}
+          </p>
+          <div className="flex flex-col space-y-2">
+            <p className="text-lg">
+              <strong className="font-semibold">Genres:</strong> {genres}
+            </p>
+            <p className="text-lg">
+              <strong className="font-semibold">Release Date:</strong>{" "}
+              {movie.release_date}
+            </p>
+            <p className="text-lg">
+              <strong className="font-semibold">Rating:</strong>{" "}
+              {renderStars(movie.vote_average)}
+            </p>
+          </div>
         </div>
       </div>
     </div>

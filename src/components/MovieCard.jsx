@@ -1,22 +1,31 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const MovieCard = ({ id, title, posterPath, voteAverage }) => {
-  const baseUrl = "https://image.tmdb.org/t/p/w500";
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/details/${id}`);
+  };
 
   return (
-    <Link
-      to={`/details/${id}`}
-      className="flex flex-col items-center bg-white shadow-md overflow-hidden transition-transform duration-300 hover:scale-105"
+    <div
+      className="cursor-pointer hover:scale-105 transition-transform"
+      onClick={handleClick}
     >
-      <img
-        src={`${baseUrl}${posterPath}`}
-        alt={title}
-        className="w-full h-80 object-cover"
-      />
-      <h3 className="font-semibold">{title}</h3>
-      <p className="text-gray-700 opacity-75">평점: ⭐ {voteAverage.toFixed(2)}</p>
-    </Link>
+      <div className="relative group">
+        {/* 이미지 */}
+        <img
+          src={`https://image.tmdb.org/t/p/w500${posterPath}`}
+          alt={title}
+          className="w-full h-80 object-cover group-hover:filter-none filter grayscale transition-all duration-300"
+        />
+        {/* 제목과 평점 */}
+        <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white p-4">
+          <h3 className="text-lg font-bold">{title}</h3>
+          <p className="text-sm">Rating: ⭐ {voteAverage}</p>
+        </div>
+      </div>
+    </div>
   );
 };
 
